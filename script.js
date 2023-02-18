@@ -80,8 +80,6 @@ const Tree = () => {
 
 const bst = Tree();
 
-let endNode = bst.knightMoves([3, 3], [1, 2]);
-
 const printMoves = (node) => {
   if (node === null) {
     return;
@@ -89,8 +87,27 @@ const printMoves = (node) => {
 
   printMoves(node.prevNode);
 
-  console.log(node.move);
+  console.log(`[${node.move[0]},${node.move[1]}]`);
 };
 
-console.log(`You made it in ${endNode.distance} moves! Here's your path:`);
-printMoves(endNode);
+const convertToInt = (arr) => {
+  return arr.map((ele) => parseInt(ele));
+};
+
+const getInput = (e) => {
+  e.preventDefault();
+  const bst = Tree();
+  console.log(e.target[0].value);
+  let start = e.target[0].value.split(",");
+  let end = e.target[1].value.split(",");
+  start = convertToInt(start);
+  end = convertToInt(end);
+
+  let endNode = bst.knightMoves(start, end);
+  console.log(`You made it in ${endNode.distance} moves! Here's your path:`);
+  printMoves(endNode);
+};
+
+const form = document.getElementById("form");
+console.log(form);
+form.addEventListener("submit", getInput);
